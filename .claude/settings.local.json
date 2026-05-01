@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx shadcn@latest init --yes)",
+      "Bash(npx shadcn@latest init --defaults)",
+      "Bash(npx shadcn@latest add button --yes)",
+      "Bash(npm run *)",
+      "Bash(npm i *)",
+      "mcp__Neon__run_sql_transaction"
+    ]
+  }
+}
