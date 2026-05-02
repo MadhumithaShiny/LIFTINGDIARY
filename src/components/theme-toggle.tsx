@@ -24,6 +24,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Toggle theme"
+      suppressHydrationWarning
       className="relative w-9 h-9 rounded-full flex items-center justify-center border border-border bg-background hover:bg-muted transition-colors duration-200"
     >
       {/* Sun */}

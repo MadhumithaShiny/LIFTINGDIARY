@@ -7,7 +7,8 @@
       "Bash(npx shadcn@latest add button --yes)",
       "Bash(npm run *)",
       "Bash(npm i *)",
-      "mcp__Neon__run_sql_transaction"
+      "mcp__Neon__run_sql_transaction",
+      "Bash(npx tsc *)"
     ]
   }
 }

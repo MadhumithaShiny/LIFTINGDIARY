@@ -49,6 +49,17 @@
 }
 
 :root {
+  /* ── Workout type colors — light theme (darker for readability on white) ── */
+  --wt-push-color:     #5b21b6;
+  --wt-pull-color:     #0e7490;
+  --wt-leg-color:      #b45309;
+  --wt-chest-color:    #be123c;
+  --wt-back-color:     #0f766e;
+  --wt-shoulder-color: #4338ca;
+  --wt-arm-color:      #c2410c;
+  --wt-cardio-color:   #15803d;
+  --wt-default-color:  #475569;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -84,6 +95,17 @@
 }
 
 .dark {
+  /* ── Workout type colors — dark theme (vivid/neon) ── */
+  --wt-push-color:     #7c3aed;
+  --wt-pull-color:     #06b6d4;
+  --wt-leg-color:      #f59e0b;
+  --wt-chest-color:    #f43f5e;
+  --wt-back-color:     #14b8a6;
+  --wt-shoulder-color: #6366f1;
+  --wt-arm-color:      #f97316;
+  --wt-cardio-color:   #22c55e;
+  --wt-default-color:  #64748b;
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -173,3 +195,115 @@
   background: #06b6d41a;
   box-shadow: 0 0 18px 4px #06b6d488, inset 0 0 12px 0 #06b6d433;
 }
+
+/* ── Workout type CSS classes — apply --wt-color via CSS class on the card ── */
+.wt-push     { --wt-color: var(--wt-push-color); }
+.wt-pull     { --wt-color: var(--wt-pull-color); }
+.wt-leg      { --wt-color: var(--wt-leg-color); }
+.wt-chest    { --wt-color: var(--wt-chest-color); }
+.wt-back     { --wt-color: var(--wt-back-color); }
+.wt-shoulder { --wt-color: var(--wt-shoulder-color); }
+.wt-arm      { --wt-color: var(--wt-arm-color); }
+.wt-cardio   { --wt-color: var(--wt-cardio-color); }
+.wt-default  { --wt-color: var(--wt-default-color); }
+
+/* ── Workout cards ── */
+.workout-card {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--wt-color);
+  background: var(--card);
+}
+.workout-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--wt-color);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+.workout-card:hover::before { transform: scaleY(1); }
+.workout-card > * { position: relative; z-index: 1; }
+
+/* On hover: flip all text/SVG to white for contrast */
+.workout-card:hover .wc-title        { color: #fff !important; }
+.workout-card:hover .wc-time         { color: rgba(255,255,255,0.75) !important; }
+.workout-card:hover .wc-label        { color: rgba(255,255,255,0.7) !important; }
+.workout-card:hover .wc-trainer-bubble {
+  background: rgba(255,255,255,0.2) !important;
+  border-color: rgba(255,255,255,0.5) !important;
+  color: #fff !important;
+}
+.workout-card:hover .wc-trainee-bubble {
+  background: rgba(255,255,255,0.15) !important;
+  color: rgba(255,255,255,0.9) !important;
+}
+.workout-card:hover .wc-svg line,
+.workout-card:hover .wc-svg circle,
+.workout-card:hover .wc-svg path     { stroke: #fff !important; }
+.workout-card:hover .wc-dot-active   { background: #fff !important; }
+.workout-card:hover .wc-dot-inactive { background: rgba(255,255,255,0.4) !important; }
+.workout-card:hover .exercise-tag    { background: rgba(255,255,255,0.2) !important; color: #fff !important; }
+.workout-card:hover .exercise-name   { color: #fff !important; }
+.workout-card:hover .set-chip        { background: rgba(255,255,255,0.15) !important; color: rgba(255,255,255,0.9) !important; }
+
+/* ── Trainer animations ── */
+@keyframes trainer-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50%       { transform: rotate(2deg); }
+}
+@keyframes trainer-arm-gesture {
+  0%, 100% { transform: rotate(0deg); }
+  50%       { transform: rotate(-16deg); }
+}
+.trainer-torso { animation: trainer-sway 2s ease-in-out infinite; transform-origin: 30px 28px; }
+.trainer-arm   { animation: trainer-arm-gesture 1.8s ease-in-out infinite; transform-origin: 30px 35px; }
+.workout-card:hover .trainer-torso { animation-duration: 0.45s; }
+.workout-card:hover .trainer-arm   { animation-duration: 0.35s; }
+
+/* ── Trainee pose animations ── */
+@keyframes pose-squat {
+  0%, 100% { transform: translateY(0); }
+  45%       { transform: translateY(5px) scaleY(0.94); }
+}
+@keyframes pose-deadlift {
+  0%, 100% { transform: rotate(0deg); }
+  45%       { transform: rotate(4deg) translateY(3px); }
+}
+@keyframes pose-bench {
+  0%, 100% { transform: translateY(0); }
+  45%       { transform: translateY(-6px); }
+}
+@keyframes pose-overhead {
+  0%, 100% { transform: scaleY(1); }
+  45%       { transform: scaleY(0.96) translateY(2px); }
+}
+@keyframes pose-pullup {
+  0%, 100% { transform: translateY(0); }
+  45%       { transform: translateY(-5px); }
+}
+@keyframes pose-pushdown {
+  0%, 100% { transform: rotate(0deg); }
+  50%       { transform: rotate(3deg) translateY(2px); }
+}
+@keyframes pose-running {
+  0%, 100% { transform: rotate(-5deg); }
+  50%       { transform: rotate(5deg); }
+}
+@keyframes pose-core {
+  0%, 100% { transform: rotate(0deg); }
+  50%       { transform: rotate(-5deg); }
+}
+
+.trainee-body { animation: pose-squat 1.4s ease-in-out infinite; transform-origin: 30px 50px; }
+.trainee-body.pose-deadlift  { animation-name: pose-deadlift; }
+.trainee-body.pose-bench     { animation-name: pose-bench;    animation-duration: 1.2s; }
+.trainee-body.pose-overhead  { animation-name: pose-overhead; animation-duration: 1.3s; }
+.trainee-body.pose-pullup    { animation-name: pose-pullup;   animation-duration: 1.5s; }
+.trainee-body.pose-pushdown  { animation-name: pose-pushdown; animation-duration: 1s; }
+.trainee-body.pose-running   { animation-name: pose-running;  animation-duration: 0.5s; }
+.trainee-body.pose-core      { animation-name: pose-core;     animation-duration: 1.6s; }
+
+.workout-card:hover .trainee-body { animation-duration: 0.4s !important; }
